@@ -25,12 +25,25 @@
             display: flex;
             flex-direction: column;
         }
-        .menu, .btns{
+        .menu{
             flex: 20% 0 0;
             display: flex;
         }
         .menu {
             justify-content: flex-start;
+        }
+        .pre, .next{
+            width: 50%;
+            height: 100%;
+            position: absolute;
+        }
+        .pre {
+            top: 0; 
+            left: 0;
+        }
+        .next {
+            top: 0; 
+            right: 0;
         }
         .china, .eng{
             width: 30%;
@@ -41,7 +54,7 @@
             cursor: pointer;
         }
         .word {
-            flex: 60% 0 0;
+            flex: 80% 0 0;
             border: 1px solid #ccc;
             display: flex;
             justify-content: center;
@@ -50,28 +63,20 @@
             font-weight: bold;
             color: rgb(0, 204, 255);
             opacity: 0.8;
-        }
-        .btns {
-            border: 1px solid #ccc;;
-        }
-        .left, .right {
-            flex: 50% 0 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-        .left {
-            border-right: 1px solid #ccc;
+            position: relative;
         }
     </style>
 </head>
     <div class="word-wrapper">
         <div class="menu">
+            
             <div class="eng">英文</div>
             <div class="china">中文</div>
         </div>
         <div class="word" id='word'>
+            <div class="pre"></div>
+            <div class="next"></div>
+            <span class="wordTxt" id="wordTxt"></span>
         </div>
     </div>
 <body>
@@ -131,20 +136,34 @@
         */
         const noOrderWords = shuffle(words)
         let wordDiv = document.getElementById('word'),
-            left = document.getElementById('left'),
-            right = document.getElementById('right'),
+            wordTxt = document.getElementById('wordTxt'),
+            pre = document.getElementsByClassName('pre')[0],
+            next = document.getElementsByClassName('next')[0],
             i = 0,
             n = noOrderWords.length,
             move = {flag: true};
 
-        renderText(wordDiv, noOrderWords[i])
+        renderText(wordTxt, noOrderWords[i])
 
         /*
         * 主程序
         */
-
+        pre.onclick = function(e) {
+            if (i == 0) {
+                i = n - 1
+            }else {
+                i --;
+            }
+        }
+        next.onclick = function(e) {
+            if (i == n-1) {
+                i = 0
+            }else {
+                i ++;
+            }
+        }
         // 手指接触屏幕
-        document.addEventListener("touchstart", function(e){
+        /*document.addEventListener("touchstart", function(e){
             move.startX = e.touches[0].pageX;
             move.startTime = new Date().getTime();
             if (e.target.classList.contains('eng') || e.target.classList.contains('china')) {
@@ -177,8 +196,8 @@
                     i ++;
                 }
             }
-            renderText(wordDiv, noOrderWords[i])
-        }, false);
+            renderText(wordTxt, noOrderWords[i])
+        }, false);*/
     </script>
 </body>
 </html>
