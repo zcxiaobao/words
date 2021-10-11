@@ -106,7 +106,7 @@ sentences = [
   {
     sentence:
       "Better still ,develop a reputation inside your lab and with people your lab <strong>___</strong> as a person who fosters and initiates collaborations--and make sure this quality gets mentioned by those who will take those reference phone calls.",
-    strong: ['collaborators with'],
+    strong: ['collaborates with'],
   },
   {
     sentence:
