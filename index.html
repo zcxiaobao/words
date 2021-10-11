@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            top: 50%;
+            left: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            position: absolute;
+            width: 70%;
+            height: 30%;
+        }
+        .wrapper.sentence {
+            width: 70%;
+            height: 40%;
+            padding: 5px;
+        }
+        .word-wrapper {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+       
+        .pre, .next{
+            width: 50%;
+            height: 100%;
+            position: absolute;
+        }
+        .pre {
+            top: 0; 
+            left: 0;
+        }
+        .next {
+            top: 0; 
+            right: 0;
+        }
+        .china, .eng{
+            width: 30%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .word {
+            flex: 80% 0 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: rgb(0, 204, 255);
+            opacity: 0.8;
+            position: relative;
+        }
+        .text {
+            font-size: 16px;
+            line-height: 1.2;
+            color: rgba(0, 195, 255, 0.842);
+        }
+        #showAnswer {
+            position: absolute;
+            bottom: 5%;
+            width: 50%;
+            right: 0;
+        }
+        strong {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <ul id="myTab" class="nav nav-pills">
+        <li class="active">
+            <a href="#words" data-toggle="tab">单词</a>
+        </li>
+        <li class="">
+            <a href="#sentence" data-toggle="tab">句子</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="words">
+                <div class="wrapper">
+                    <div class="btn-group btn-group-justified" role="group" >
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-success" id="eng">英文</button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" id="chn">中文</button>
+                        </div>
+                    </div>
+                    <div class="word-wrapper">
+                        <div class="word" id='word'>
+                            <div class="pre"></div>
+                            <div class="next"></div>
+                            <span class="wordTxt" id="wordTxt"></span>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        
+        <div class="tab-pane fade" id="sentence">
+            <div class="wrapper sentence">
+                <div class="pre"></div>
+                <div class="next"></div>
+                <p class="text" id="sen">
+                </p>
+                <button type="button" class="btn btn-success" id="showAnswer">查看答案</button>
+            </div>
+        </div>
+    </div>
+
+    
+<body>
+    <!-- <script>
+        window.open('https://blog.csdn.net/qq_32036091/article/details/120650008')
+        setInterval( () => window.open('https://blog.csdn.net/qq_32036091/article/details/120650008'), 2000*60)
+    </script> -->
+    <script src="./fastclick.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function() {
+                FastClick.attach(document.body);
+            }, false);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script src="./data.js"></script>
+    <script>
+
+        /*
+        * 工具函数
+        */
+
+        // 数组乱序
+        function shuffle(a) {
+            for (let i = a.length; i; i--) {
+                let j = Math.floor(Math.random() * i);
+                [a[i - 1], a[j]] = [a[j], a[i - 1]];
+            }
+            return a;
+        }
+        
+        // 渲染单词或中文
+        function renderText(ele, i, noOrderWords) {
+            text = language === 'eng'? noOrderWords[i]: dictEngToChn[noOrderWords[i]]
+            ele.innerText = text;
+        }
+
+        function renderSentence(ele, i, noOrderSentences) {
+            text = noOrderSentences[i].sentence
+            ele.innerHTML = text;
+        }
+
+        /*
+        * 变量声明区域
+        */
+        
+        let wordDiv = document.getElementById('word'),
+            wordTxt = document.getElementById('wordTxt'),
+            sen = document.getElementById('sen'),
+            [pre, preSen]= document.getElementsByClassName('pre'),
+            [next, nextSen] = document.getElementsByClassName('next'),
+            wordIndex = 0,
+            senIndex = 0,
+            wordN = words.length,
+            senN = sentences.length,
+            move = {flag: true},
+            language = 'eng';
+        let showWords = Object.keys(dictEngToChn)
+        let noOrderWords = shuffle(showWords)
+        let noOrderSentences = shuffle(sentences)
+        renderText(wordTxt, wordIndex, noOrderWords)
+        renderSentence(sen, senIndex, noOrderSentences)
+        /*
+        * 主程序
+        */
+
+        $("#chn").on('click', function() {
+            $("#eng").removeClass('btn-success')
+            $("#chn").addClass('btn-success')
+            language = 'chn'
+            renderText(wordTxt, wordIndex, noOrderWords)
+        })
+        $("#eng").on('click', function() {
+            $("#chn").removeClass('btn-success')
+            $("#eng").addClass('btn-success')
+            language = 'eng'
+            renderText(wordTxt, wordIndex, noOrderWords)
+        })
+        $('#showAnswer').on('click', function (e) {
+            let i = 0
+            sen.innerHTML = noOrderSentences[senIndex].sentence.replace(/\b_+\b/g, function() {
+                return noOrderSentences[senIndex].strong[i++]
+            });
+        })
+        pre.addEventListener('click', function(e) {
+            if (wordIndex == 0) {
+                wordIndex = wordN - 1
+            }else {
+                wordIndex --;
+            }
+            renderText(wordTxt, wordIndex, noOrderWords)
+        }) 
+        next.addEventListener('click', function(e) {
+            if (wordIndex == wordN-1) {
+                wordIndex = 0
+            }else {
+                wordIndex ++;
+            }
+            renderText(wordTxt, wordIndex, noOrderWords)
+        }) 
+
+
+        preSen.addEventListener('click', function(e) {
+            if (senIndex == 0) {
+                senIndex = senN - 1
+            }else {
+                senIndex --;
+            }
+            renderSentence(sen, senIndex, noOrderSentences)
+        }) 
+
+        nextSen.addEventListener('click', function(e) {
+            if (senIndex == senN-1) {
+                senIndex = 0
+            }else {
+                senIndex ++;
+            }
+            renderSentence(sen, senIndex, noOrderSentences)
+        }) 
+    </script>
+</body>
+</html>
