@@ -160,7 +160,7 @@
             }
             var endx = e.changedTouches[0].pageX;
             var endTime = new Date().getTime()
-            if (endTime - move.startTime < 200) {
+            if (endTime - move.startTime < 100) {
                 return;
             }
             var direction = endx - move.startX;
