@@ -74,8 +74,8 @@
             <div class="china">中文</div>
         </div>
         <div class="word" id='word'>
-            <div class="pre needsclick"></div>
-            <div class="next needsclick"></div>
+            <div class="pre"></div>
+            <div class="next"></div>
             <span class="wordTxt" id="wordTxt"></span>
         </div>
     </div>
@@ -156,20 +156,22 @@
         /*
         * 主程序
         */
-        pre.onclick = function(e) {
+        pre.addEventListener('click', function(e) {
             if (i == 0) {
                 i = n - 1
             }else {
                 i --;
             }
-        }
-        next.onclick = function(e) {
+            renderText(wordTxt, noOrderWords[i])
+        }) 
+        next.addEventListener('click', function(e) {
             if (i == n-1) {
                 i = 0
             }else {
                 i ++;
             }
-        }
+            renderText(wordTxt, noOrderWords[i])
+        }) 
         // 手指接触屏幕
         /*document.addEventListener("touchstart", function(e){
             move.startX = e.touches[0].pageX;
