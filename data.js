@@ -60,13 +60,13 @@ words.forEach((val, key) => {
 sentences = [
   {
     sentence:
-      "Every company has <strong>___</strong> staff in a given area of expertise that you can <strong>___</strong> to get the job done.",
-    strong: ['a handful of', 'count on'],
+      "Every company has <strong>___</strong> staff in a given area of <strong>___</strong> that you can <strong>___</strong> to get the job done.",
+    strong: ['a handful of', 'expertise', 'count on'],
   },
   {
     sentence:
-      "We <strong>___</strong> them <strong>___</strong> the standards we see in our top people. If it looks like they have these same traits，we will <strong>___</strong> them. It is just a bit riskier.",
-    strong: ['hold', 'up to', 'place a bet on'],
+      "We <strong>___</strong> them <strong>___</strong> the standards we see in our top people. If it looks like they have these same <strong>___</strong>，we will <strong>___</strong> them. It is just a bit riskier.",
+    strong: ['hold', 'up to', 'traits', 'place a bet on'],
   },
   {
     sentence:
@@ -85,12 +85,17 @@ sentences = [
   },
   {
     sentence:
-      "Scientists spend their lives <strong>___</strong> knowledge and <strong>___</strong> technical acumen,” he says,but working for a business requires something else entirely — people skills",
-    strong: ['accumulating', 'developing'],
+      "Scientists spend their lives <strong>___</strong> and <strong>___</strong>,” he says,but working for a business requires something else entirely — people skills",
+    strong: ['accumulating knowledge', 'developing technical acumen'],
   },
   {
     sentence:
-      "You can make yourself more attractive to companies by working together with scientists from other laboratories and <strong>disciplines</strong> <strong>___</strong> a common goal - and documenting the results on your resume .",
+      "It <strong>___</strong> repeating because it is the single most public difference between academia and industry. “It is teamwork,”says Fetzer.”The business  environment is less lone-wolf and competitive ,so signs of being collaborative and selfless <strong>___</strong>”.",
+    strong: ['deserves', 'stand out'],
+  },
+  {
+    sentence:
+      "You can make yourself more attractive to companies by working together with scientists from other laboratories and <strong style="color: red;">disciplines</strong> <strong>___</strong> a common goal - and documenting the results on your resume .",
     strong: ['in pursuit of'],
   },
   {
@@ -135,7 +140,11 @@ sentences = [
   },
   {
     sentence:
-      "In a business, you need to understand the process, but you end up <strong>___</strong> the answer and then take a risk based on what you think that answer means to your business.",
-    strong: ['falling in love with'],
+      "In a business, you need to understand the process, but you end up <strong>___</strong> the answer and then take a risk <strong>___</strong> what you think that answer means to your business.",
+    strong: ['falling in love with', 'based on'],
   },
+  {
+    sentence: "A candidate needs to have demonstrated the ability to make decision with <strong>___</strong> or <strong>___</strong>.",
+      strong: ['imperfect', 'incomplete']
+  }
 ];
