@@ -95,7 +95,7 @@ sentences = [
   },
   {
     sentence:
-      "You can make yourself more attractive to companies by working together with scientists from other laboratories and <strong style="color: red;">disciplines</strong> <strong>___</strong> a common goal - and documenting the results on your resume .",
+      "You can make yourself more attractive to companies by working together with scientists from other laboratories and <strong style=\"color: red;\">disciplines</strong> <strong>___</strong> a common goal - and documenting the results on your resume .",
     strong: ['in pursuit of'],
   },
   {
